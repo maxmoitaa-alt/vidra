@@ -1,6 +1,7 @@
 #include "vidra/gfx/renderer.hpp"
 #include "vidra/core/log.hpp"
 #include <X11/Xlib.h>
+#include <cstdio>
 #include <cstring>
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_xlib.h>
@@ -435,6 +436,5 @@ class VkRenderer final : public Renderer {
 } // namespace
 
 Renderer* createVkRenderer() { return new VkRenderer(); }
-Renderer* createRenderer(BackendKind k) { return k == BackendKind::Vulkan ? createVkRenderer() : nullptr; }
 
 } // namespace vidra::gfx

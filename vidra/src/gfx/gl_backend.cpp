@@ -7,6 +7,7 @@
 #include <GL/glext.h>
 #include <GL/glx.h>
 #include <X11/Xlib.h>
+#include <cstdio>
 #include <cstring>
 #include <vector>
 
@@ -22,7 +23,7 @@ GLuint compile(GLenum t, const char* src) {
   if (!ok) {
     char b[2048];
     glGetShaderInfoLog(s, sizeof(b), nullptr, b);
-    core::VIDRA_LOGE("shader: %s", b);
+    VIDRA_LOGE("shader: %s", b);
   }
   return s;
 }
@@ -240,6 +241,5 @@ class GLRenderer final : public Renderer {
 } // namespace
 
 Renderer* createGLRenderer() { return new GLRenderer(); }
-Renderer* createRenderer(BackendKind k) { return k == BackendKind::OpenGL ? createGLRenderer() : nullptr; }
 
 } // namespace vidra::gfx

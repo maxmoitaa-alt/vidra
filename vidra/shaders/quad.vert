@@ -12,7 +12,7 @@ layout(std140) uniform Globals {
 } G;
 
 void main() {
-  vec2 corner = vec2(float((gl_VertexIndex << 1) & 2), float(gl_VertexIndex & 2));
+  vec2 corner = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexIndex & 2));
   vHalf = Q.box.zw;
   vec2 world = Q.box.xy + corner * (vHalf + vec2(24.0));
   vUV = world / G.screen;

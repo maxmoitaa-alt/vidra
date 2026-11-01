@@ -3,12 +3,12 @@
 #include <cstdlib>
 
 int main(int, char**) {
-  vidra::core::VIDRA_LOGI("vidra 1.0.1");
+  VIDRA_LOGI("vidra 1.0.1");
   try {
     vidra::app::App app;
     return app.run();
   } catch (const std::exception& e) {
-    vidra::core::VIDRA_LOGE("fatal: %s", e.what());
+    VIDRA_LOGE("fatal: %s", e.what());
     return 1;
   }
 }

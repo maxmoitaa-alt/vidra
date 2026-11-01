@@ -1,51 +1,27 @@
 # VIDRA
 
-### A modern Luau scripting environment for Linux.
+A modern, experimental Luau scripting environment for Linux desktops.
 
-VIDRA is an experimental Luau scripting environment designed around a custom runtime and a modern desktop interface. Built with a focus on usability, visual design, and extensibility.
+VIDRA combines a local Luau runtime, a native C++ desktop application, and an expressive interface. The current runtime is local: it does not inject into Roblox processes or bypass Roblox protections.
 
-## Features
+## Repository layout
 
-- **Luau Runtime:** Execute Luau scripts in an isolated local environment.
-- **Modern Interface:** Material-inspired design with expressive UI elements.
-- **Code Editor:** A dedicated workspace for writing and managing scripts.
-- **Linux Focus:** Designed for Linux desktop environments.
-- **Modular Architecture:** Organized components for future development and improvements.
+The application source is in [`vidra/`](vidra/). The repository-level license is GNU GPL-3.0.
 
-## Technology
-
-- C++
-- Luau
-- CMake
-- Vulkan / OpenGL components
-- Python build tooling
-
-## Project Status
-
-VIDRA is an experimental project under active development. Features, compatibility, and architecture may change.
-
-## Building
-
-Clone the repository:
+## Build on Linux
 
 ```bash
-git clone https://github.com/USERNAME/VIDRA.git
-cd VIDRA
-```
-
-Run the build script:
-
-```bash
-chmod +x build.sh
+git clone https://github.com/maxmoitaa-alt/vidra.git
+cd vidra/vidra
 ./build.sh --no-install
 ```
 
-Build requirements and dependencies may vary depending on your Linux distribution.
+The build downloads Luau through CMake FetchContent. Install the development packages listed in [the project README](vidra/README.md) before building.
 
-## Scope
+## Documentation
 
-VIDRA provides a local Luau execution environment. It does not claim to provide Roblox process injection, anti-cheat bypass, or protection against account bans.
+- [Build instructions and project details](vidra/README.md)
+- [Known issues and current limitations](vidra/KNOWN_ISSUES.md)
+- [GNU GPL v3 license](LICENSE)
 
-## License
-
-See the `LICENSE` file for licensing terms.
+VIDRA is experimental. Features and compatibility may change.

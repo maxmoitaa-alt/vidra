@@ -30,7 +30,7 @@ int apiPrint(lua_State* L) {
     out.append(s, len);
     lua_pop(L, 1);
   }
-  if (g_vm) core::VIDRA_LOGI("%s", out.c_str());
+  if (g_vm) VIDRA_LOGI("%s", out.c_str());
   return 0;
 }
 

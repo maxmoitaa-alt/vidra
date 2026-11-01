@@ -16,7 +16,7 @@ for c in cmake ninja clang++ python3 pkg-config; do
   command -v "$c" >/dev/null || { echo "[x] falta $c"; exit 1; }
 done
 python3 tools/tokens_gen.py
-cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 cmake --build build -j "$(nproc)"
 ctest --test-dir build --output-on-failure
 if [ "$INSTALL" = 1 ]; then

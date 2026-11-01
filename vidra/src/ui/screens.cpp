@@ -151,7 +151,7 @@ void SettingsView::paint(Painter& p, const Palette& pal) {
 }
 AboutView::AboutView() { bounds = {0, 0, 400, 300}; }
 void AboutView::paint(Painter& p, const Palette& pal) {
-  p.text("Vidra 1.0.1", bounds.x, bounds.y + 80, tok::kTypeDisplayMediumSize, pal[Role::OnSurface]);
+  p.text("Vidra 1.0.2", bounds.x, bounds.y + 80, tok::kTypeDisplayMediumSize, pal[Role::OnSurface]);
   p.text("Executor Luau para Roblox em Linux.", bounds.x, bounds.y + 120,
          tok::kTypeBodyLargeSize, pal[Role::OnSurfaceVariant]);
   p.text("Material 3 Expressive + Liquid Glass.", bounds.x, bounds.y + 148,

@@ -23,7 +23,7 @@ std::vector<uint32_t> utf8Decode(const std::string& s) {
 
 TextEngine::TextEngine() {
   atlas_.assign(size_t(aw_) * size_t(ah_) * 4, 0);
-  if (FT_Init_FreeType(&lib_) != 0) core::VIDRA_LOGE("FreeType init falhou");
+  if (FT_Init_FreeType(&lib_) != 0) VIDRA_LOGE("FreeType init falhou");
 }
 
 TextEngine::~TextEngine() {
@@ -37,7 +37,7 @@ bool TextEngine::load(const std::string& path, std::string* err) {
     return false;
   }
   FT_Select_Charmap(face_, FT_ENCODING_UNICODE);
-  core::VIDRA_LOGI("fonte: %s", path.c_str());
+  VIDRA_LOGI("fonte: %s", path.c_str());
   return true;
 }
 
