@@ -30,7 +30,7 @@ jobs:
         run: cmake -S vidra -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++
 
       - name: Build
-        run: cmake --build build --parallel 2
+        run: cmake --build build --parallel 2 --target vidra test_color test_spring test_sdf test_json test_runtime test_editor test_window test_renderer test_settings
 
       - name: Test
         run: ctest --test-dir build --output-on-failure
