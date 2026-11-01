@@ -1,0 +1,59 @@
+cmake_minimum_required(VERSION 3.28)
+project(vidra VERSION 1.0.1 LANGUAGES CXX C)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+include(cmake/CompilerOptions.cmake)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE RelWithDebInfo)
+endif()
+enable_testing()
+include(FetchContent)
+FetchContent_Declare(luau GIT_REPOSITORY https://github.com/luau-lang/luau.git GIT_TAG 0.653)
+set(LUAU_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(luau)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(X11 REQUIRED x11 xext xfixes xi)
+pkg_check_modules(FREETYPE REQUIRED freetype2)
+pkg_check_modules(HARFBUZZ REQUIRED harfbuzz)
+pkg_check_modules(GL REQUIRED gl)
+find_package(Vulkan QUIET)
+
+add_custom_target(tokens
+  COMMAND python3 ${CMAKE_SOURCE_DIR}/tools/tokens_gen.py
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+add_library(vidra_core STATIC
+  src/core/log.cpp src/core/paths.cpp src/core/json.cpp src/core/settings.cpp
+  src/color/hct.cpp src/color/palette.cpp src/gfx/sdf.cpp src/gfx/text.cpp
+  src/gfx/gl_backend.cpp src/platform/x11_window.cpp src/runtime/vm.cpp
+  src/ui/widget.cpp src/ui/widgets.cpp src/ui/editor.cpp src/ui/screens.cpp src/ui/root.cpp)
+add_dependencies(vidra_core tokens)
+target_include_directories(vidra_core PUBLIC include)
+target_link_libraries(vidra_core PUBLIC
+  ${X11_LIBRARIES} ${FREETYPE_LIBRARIES} ${HARFBUZZ_LIBRARIES} ${GL_LIBRARIES}
+  Luau.VM Luau.Compiler Luau.Ast)
+if(Vulkan_FOUND)
+  target_sources(vidra_core PRIVATE src/gfx/vk_backend.cpp)
+  target_link_libraries(vidra_core PUBLIC Vulkan::Vulkan)
+  target_compile_definitions(vidra_core PUBLIC VIDRA_HAVE_VULKAN)
+endif()
+
+add_executable(vidra src/app/main.cpp src/app/app.cpp)
+target_link_libraries(vidra PRIVATE vidra_core)
+add_dependencies(vidra tokens)
+
+add_custom_target(shaders ALL
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/shaders
+  COMMAND sh -c "cat ${CMAKE_SOURCE_DIR}/shaders/common.glsl ${CMAKE_SOURCE_DIR}/shaders/quad.vert > ${CMAKE_BINARY_DIR}/shaders/common.glsl"
+  COMMAND sh -c "cat ${CMAKE_SOURCE_DIR}/shaders/common.glsl ${CMAKE_SOURCE_DIR}/shaders/quad.vert > ${CMAKE_BINARY_DIR}/shaders/quad.vert")
+add_dependencies(vidra shaders)
+
+foreach(t color spring sdf json runtime editor window renderer settings)
+  add_executable(test_${t} tests/test_${t}.cpp)
+  target_link_libraries(test_${t} PRIVATE vidra_core)
+  add_test(NAME ${t} COMMAND test_${t})
+  set_tests_properties(${t} PROPERTIES SKIP_RETURN_CODE 77)
+endforeach()
+
+install(TARGETS vidra RUNTIME DESTINATION bin)

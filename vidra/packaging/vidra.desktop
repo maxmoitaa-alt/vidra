@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Vidra
+Comment=Executor Luau com Material 3 e Liquid Glass
+Exec=vidra
+Icon=ai.vidra.Vidra
+Terminal=false
+Categories=Development;Game;
+StartupWMClass=vidra

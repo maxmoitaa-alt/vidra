@@ -1,0 +1,11 @@
+{
+  "app-id": "ai.vidra.Vidra",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "24.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "vidra",
+  "finish-args": ["--share=ipc", "--socket=fallback-x11", "--device=dri",
+                  "--filesystem=xdg-data/vidra:create"],
+  "modules": [{ "name": "vidra", "buildsystem": "cmake-ninja",
+                "sources": [{ "type": "dir", "path": ".." }] }]
+}
