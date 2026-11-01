@@ -1,5 +1,6 @@
 #include "vidra/gfx/renderer.hpp"
 #include "vidra/core/log.hpp"
+#include "vidra/tokens.hpp"
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif

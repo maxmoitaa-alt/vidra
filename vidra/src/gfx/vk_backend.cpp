@@ -1,5 +1,6 @@
 #include "vidra/gfx/renderer.hpp"
 #include "vidra/core/log.hpp"
+#include "vidra/tokens.hpp"
 #include <X11/Xlib.h>
 #include <cstdio>
 #include <cstring>
