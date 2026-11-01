@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 int main(int, char**) {
-  VIDRA_LOGI("vidra 1.0.1");
+  VIDRA_LOGI("vidra 1.0.2");
   try {
     vidra::app::App app;
     return app.run();

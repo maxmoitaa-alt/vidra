@@ -132,7 +132,7 @@ void Vm::loop() {
     }
     r.ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
     if (out_) out_(r.ok, r.ok ? "ok" : ("erro: " + r.error));
-    core::VIDRA_LOGI("vm %.2fms ok=%d", r.ms, int(r.ok));
+    VIDRA_LOGI("vm %.2fms ok=%d", r.ms, int(r.ok));
     busy_ = false;
   }
 }
