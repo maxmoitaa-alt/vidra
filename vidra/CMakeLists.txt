@@ -34,7 +34,9 @@ add_library(vidra_core STATIC
   src/gfx/gl_backend.cpp src/gfx/renderer_factory.cpp src/platform/x11_window.cpp src/runtime/vm.cpp
   src/ui/widget.cpp src/ui/widgets.cpp src/ui/editor.cpp src/ui/screens.cpp src/ui/root.cpp)
 add_dependencies(vidra_core tokens)
-target_include_directories(vidra_core PUBLIC include)
+target_include_directories(vidra_core PUBLIC
+  include ${X11_INCLUDE_DIRS} ${FREETYPE_INCLUDE_DIRS}
+  ${HARFBUZZ_INCLUDE_DIRS} ${GL_INCLUDE_DIRS})
 target_link_libraries(vidra_core PUBLIC
   ${X11_LIBRARIES} ${FREETYPE_LIBRARIES} ${HARFBUZZ_LIBRARIES} ${GL_LIBRARIES}
   Luau.VM Luau.Compiler Luau.Ast)
