@@ -93,7 +93,7 @@ float Widget::stateAlpha() const {
 void Widget::paintBase(Painter& p, const Palette& pal, Role fill, float baseRadius) {
   const float r = radius.x > 0.5f ? radius.x : baseRadius;
   const RectF b{bounds.x, bounds.y + lift.x, bounds.w, bounds.h};
-  p.rect(b, r, pal[disabled ? Role::SurfaceContainerHigh : fill]);
+  p.rect(b, r, pal[disabled ? Role::SurfaceHigh : fill]);
   const float a = stateAlpha();
   if (a > 0.001f) p.rect(b, r, pal[Role::OnSurface], a * 0.12f);
 }
