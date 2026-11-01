@@ -12,7 +12,7 @@ void Button::layout(RectF b) { bounds = b; }
 void Button::paint(Painter& p, const Palette& pal) {
   if (!visible) return;
   const bool primary = selected;
-  paintBase(p, pal, primary ? Role::Primary : Role::SurfaceContainerHigh, 24.0f);
+  paintBase(p, pal, primary ? Role::Primary : Role::SurfaceHigh, 24.0f);
   const float w = p.measure(label_, tok::kTypeLabelLargeSize);
   p.text(label_, bounds.x + (bounds.w - w) * 0.5f, bounds.y + bounds.h * 0.5f + 5.0f,
          tok::kTypeLabelLargeSize, pal[primary ? Role::OnPrimary : Role::OnSurface]);
@@ -32,7 +32,7 @@ IconButton::IconButton(std::string g, std::string t) : glyph_(std::move(g)), tip
 }
 void IconButton::paint(Painter& p, const Palette& pal) {
   if (!visible) return;
-  paintBase(p, pal, Role::SurfaceContainerHigh, 24.0f);
+  paintBase(p, pal, Role::SurfaceHigh, 24.0f);
   p.glyph(glyph_, {bounds.x + 12, bounds.y + 12, 24, 24}, pal[Role::OnSurfaceVariant]);
   paintFocus(p, pal);
 }
@@ -54,7 +54,7 @@ void Chip::layout(RectF b) {
 }
 void Chip::paint(Painter& p, const Palette& pal) {
   if (!visible) return;
-  paintBase(p, pal, selected ? Role::SecondaryContainer : Role::SurfaceContainerHigh,
+  paintBase(p, pal, selected ? Role::SecondaryContainer : Role::SurfaceHigh,
             selected ? 20.0f : 8.0f);
   p.text(label_, bounds.x + 14.0f, bounds.y + 26.0f, tok::kTypeLabelLargeSize,
          pal[selected ? Role::OnSecondaryContainer : Role::OnSurfaceVariant]);
@@ -117,7 +117,7 @@ Field::Field(std::string ph) : ph_(std::move(ph)) {
 }
 void Field::setValue(std::string v) { value_ = std::move(v); }
 void Field::paint(Painter& p, const Palette& pal) {
-  paintBase(p, pal, Role::SurfaceContainerHigh, 14.0f);
+  paintBase(p, pal, Role::SurfaceHigh, 14.0f);
   const bool empty = value_.empty();
   p.text(empty ? ph_ : value_, bounds.x + 14, bounds.y + 30, tok::kTypeBodyLargeSize,
          pal[empty ? Role::OnSurfaceVariant : Role::OnSurface]);
@@ -151,7 +151,7 @@ void Card::layout(RectF b) { bounds = {b.x, b.y, b.w, 148}; }
 void Card::paint(Painter& p, const Palette& pal) {
   if (!visible) return;
   p.card({bounds.x, bounds.y + lift.x, bounds.w, bounds.h}, 28.0f, tok::kNotchDepth,
-         pal[Role::SurfaceContainerHigh]);
+         pal[Role::SurfaceHigh]);
   const float a = stateAlpha();
   if (a > 0.001f) p.rect({bounds.x, bounds.y + lift.x, bounds.w, bounds.h}, 28.0f,
                          pal[Role::OnSurface], a * 0.10f);
@@ -192,7 +192,7 @@ void Dialog::paint(Painter& p, const Palette& pal) {
   p.text(title_, bounds.x + 28, bounds.y + 60, tok::kTypeHeadlineSmallSize, pal[Role::OnSurface]);
   p.text(body_, bounds.x + 28, bounds.y + 100, tok::kTypeBodyLargeSize, pal[Role::OnSurfaceVariant]);
   p.rect({bounds.x + bounds.w - 200, bounds.y + bounds.h - 72, 80, 44}, 22.0f,
-         pal[Role::SurfaceContainerHigh]);
+         pal[Role::SurfaceHigh]);
   p.text("Cancelar", bounds.x + bounds.w - 188, bounds.y + bounds.h - 44,
          tok::kTypeLabelLargeSize, pal[Role::OnSurfaceVariant]);
   p.rect({bounds.x + bounds.w - 108, bounds.y + bounds.h - 72, 80, 44}, 22.0f, pal[Role::Primary]);
