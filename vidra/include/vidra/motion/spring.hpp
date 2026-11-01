@@ -13,11 +13,17 @@ struct Spring {
   void snap(float t) { x = target = t; v = 0; settled = true; }
   bool step(double dt, bool reduce = false) {
     if (reduce) { snap(target); return false; }
+    if (!std::isfinite(dt) || dt <= 0.0) return !settled;
     constexpr float kSub = 1.0f / 600.0f;
+    const float safeMass = std::max(mass, 1e-3f);
+    const float dampingCoefficient =
+        2.0f * std::max(damping, 0.0f) * std::sqrt(std::max(stiffness * safeMass, 0.0f));
     double left = std::min(dt, 0.05);
     while (left > 0.0) {
       const float h = float(std::min(left, double(kSub)));
-      v += (-stiffness * (x - target) - damping * v) / std::max(mass, 1e-3f) * h;
+      const float acceleration =
+          (-stiffness * (x - target) - dampingCoefficient * v) / safeMass;
+      v += acceleration * h;
       x += v * h;
       left -= h;
     }

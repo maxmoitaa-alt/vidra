@@ -56,7 +56,6 @@ struct Vm::Impl {
 Vm::Vm(Limits l) : impl_(new Impl), lim_(l) {
   impl_->L = luaL_newstate();
   luaL_openlibs(impl_->L);
-  luaL_sandbox(impl_->L);
   lua_pushcfunction(impl_->L, apiPrint, "print");
   lua_setglobal(impl_->L, "print");
   lua_newtable(impl_->L);
@@ -69,6 +68,10 @@ Vm::Vm(Limits l) : impl_(new Impl), lim_(l) {
   lua_pushcfunction(impl_->L, apiSpawn, "task.spawn");
   lua_setfield(impl_->L, -2, "spawn");
   lua_setglobal(impl_->L, "task");
+  // Register custom globals before locking the shared environment.
+  // Give the main execution thread its own writable proxy environment.
+  luaL_sandbox(impl_->L);
+  luaL_sandboxthread(impl_->L);
   th_ = std::thread([this] { loop(); });
 }
 
