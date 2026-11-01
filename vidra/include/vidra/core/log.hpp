@@ -16,15 +16,19 @@ class Log {
   void write(Level l, const std::string& s);
   template <typename... Args>
   void writef(Level l, const char* format, Args... args) {
-    const int length = std::snprintf(nullptr, 0, format, args...);
-    if (length < 0) {
+    if constexpr (sizeof...(args) == 0) {
       write(l, format);
-      return;
+    } else {
+      const int length = std::snprintf(nullptr, 0, format, args...);
+      if (length < 0) {
+        write(l, format);
+        return;
+      }
+      std::string message(static_cast<size_t>(length) + 1, char{});
+      std::snprintf(message.data(), message.size(), format, args...);
+      message.resize(static_cast<size_t>(length));
+      write(l, message);
     }
-    std::string message(static_cast<size_t>(length) + 1, char{});
-    std::snprintf(message.data(), message.size(), format, args...);
-    message.resize(static_cast<size_t>(length));
-    write(l, message);
   }
   std::vector<LogLine> snapshot() const;
   void clear();

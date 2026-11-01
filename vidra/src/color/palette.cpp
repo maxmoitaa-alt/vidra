@@ -55,7 +55,7 @@ Palette buildPalette(uint32_t seed, bool dark) {
     {Role::SurfaceLow, tok::kSurfaceTintMixLow * 1.4},
     {Role::SurfaceContainer, tok::kSurfaceTintMixHigh * 0.7},
     {Role::SurfaceHigh, tok::kSurfaceTintMixHigh}}};
-  for (auto [r, m] : tinted) p[r] = mixRgba(p[r], p[Role::SurfaceTint], std::min(m, tok::kSurfaceTintMixHigh));
+  for (auto [r, m] : tinted) p[r] = mixRgba(p[r], p[Role::SurfaceTint], std::min(m, static_cast<double>(tok::kSurfaceTintMixHigh)));
   enforceContrast(p);
   return p;
 }
