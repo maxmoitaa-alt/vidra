@@ -135,7 +135,7 @@ class X11Window final : public Window {
 
  private:
   Display* dpy_ = nullptr;
-  Window win_ = 0;
+  ::Window win_ = 0;
   Atom del_ = 0, prot_ = 0, st_ = 0;
   Role role_;
   bool closed_ = false;
