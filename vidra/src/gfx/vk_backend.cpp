@@ -239,7 +239,7 @@ class VkRenderer final : public Renderer {
   int width() const override { return w_; }
   int height() const override { return h_; }
   void setPalette(const float t[3], const float s[3], float hover) override {
-    std::memcpy(tint_, t, sizeof(tint_)); std::memcpy(surf_, s, sizeof(surf_)); hover_ = hover;
+    std::memcpy(tint_, t, sizeof(tint_)); std::memcpy(surface_, s, sizeof(surface_)); hover_ = hover;
   }
   void uploadAtlas(int, int, int, int, const uint8_t*) override {}
 
@@ -430,7 +430,7 @@ class VkRenderer final : public Renderer {
   uint32_t f_ = 0, img_ = 0;
   int w_ = 0, h_ = 0, tonal_ = 0, glass_ = 0;
   float time_ = 0, hover_ = 0;
-  float tint_[3]{0.42f, 0.31f, 0.64f}, surf_[3]{0.02f, 0.02f, 0.03f};
+  float tint_[3]{0.42f, 0.31f, 0.64f}, surface_[3]{0.02f, 0.02f, 0.03f};
   bool ok_ = false, rec_ = false;
 };
 
