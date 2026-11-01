@@ -21,7 +21,7 @@ class Log {
       write(l, format);
       return;
     }
-    std::string message(static_cast<size_t>(length) + 1, '\\0');
+    std::string message(static_cast<size_t>(length) + 1, char{});
     std::snprintf(message.data(), message.size(), format, args...);
     message.resize(static_cast<size_t>(length));
     write(l, message);
